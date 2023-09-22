@@ -13,11 +13,11 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-# horizontal_list_view
+# horizontal_list_view [![Pub](https://img.shields.io/pub/v/horizontal_list_view.svg)](https://pub.dartlang.org/packages/horizontal_list_view)
 
 Flutter horizontal list view with fixed crossAxisCount.
 
-https://github.com/Nika0000/flutter_horizontal_list_view/assets/72192978/ff54823b-22ef-49f2-8587-7e12d50c9ee7
+![Preview example](example/screenshots/example.webp)
 
 ## Installing
 
