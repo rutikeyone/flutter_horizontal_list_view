@@ -25,7 +25,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  horizontal_list_view: ^1.0.0
+  horizontal_list_view: ^1.0.2
 ```
 
 import
