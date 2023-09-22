@@ -1,0 +1,19 @@
+name: horizontal_list_view
+description: Flutter horizontal list view with fixed crossAxisCount.
+version: 0.0.1
+homepage: https://github.com/nika0000/horizontal_scroll_view
+repository: https://github.com/nika0000/horizontal_scroll_view
+
+environment:
+  sdk: '>=3.0.5 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
