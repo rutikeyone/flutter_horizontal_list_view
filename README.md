@@ -1,3 +1,5 @@
+
+
 <!--
 This README describes the package. If you publish this package to pub.dev,
 this README's contents appear on the landing page for your package.
@@ -15,6 +17,8 @@ and the Flutter guide for
 
 Flutter horizontal list view with fixed crossAxisCount.
 
+https://github.com/Nika0000/flutter_horizontal_list_view/assets/72192978/ff54823b-22ef-49f2-8587-7e12d50c9ee7
+
 ## Installing
 
 Add to pubspec.yaml file
@@ -31,9 +35,6 @@ import 'package:horizontal_list_view/horizontal_list_view.dart';
 ```
 
 ## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
 
 ### Code example
 
