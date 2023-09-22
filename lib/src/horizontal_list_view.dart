@@ -79,7 +79,6 @@ class HorizontalListViewController extends ScrollController {
   Future<void> animateToPage(int page,
       {required Duration duration, required Curve curve}) {
     double offset = _snapSize * page;
-    print('Requested page:$page\ncurrent page: $currentPage\n${pageLenght}');
 
     if (page <= 0) {
       page = 0;
