@@ -1,8 +1,9 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:horizontal_list_view/src/snap_scroll_physic.dart';
 
 /// Custom Horizontal list view widget for flutter
-class HorizontalListView extends StatelessWidget {
+class HorizontalListView extends StatefulWidget {
   const HorizontalListView({
     required this.crossAxisCount,
     this.crossAxisSpacing = 0,
@@ -28,35 +29,64 @@ class HorizontalListView extends StatelessWidget {
   final Widget Function(BuildContext context, int index) itemBuilder;
 
   @override
+  State<HorizontalListView> createState() => _HorizontalListViewState();
+}
+
+class _HorizontalListViewState extends State<HorizontalListView> {
+  void rebuildAllChildren(BuildContext context) {
+    void rebuild(Element el) {
+      el.markNeedsBuild();
+      el.visitChildren(rebuild);
+    }
+
+    (context as Element).visitChildren(rebuild);
+  }
+
+  Key _key = UniqueKey();
+
+  int _computeActualChildCount(int itemCount) {
+    return math.max(0, itemCount * 2 - 1);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
+      key: _key,
       builder: (context, constraints) {
-        double snapSize = constraints.maxWidth + crossAxisSpacing;
+        double snapSize = constraints.maxWidth + widget.crossAxisSpacing;
 
-        if (controller != null) {
-          controller!.snapSize = snapSize;
+        SnapScrollSize scrollPhysics = SnapScrollSize(snapSize: snapSize);
+
+        if (!_key.toString().contains(snapSize.toString())) {
+          Future.delayed(Duration.zero, () {
+            rebuildAllChildren(context);
+            _key = new Key('snap-$snapSize');
+            setState(() {});
+          });
         }
 
-        double itemWidth =
-            (constraints.maxWidth - ((crossAxisCount - 1) * crossAxisSpacing)) /
-                crossAxisCount;
+        if (widget.controller != null) {
+          widget.controller!.snapSize = snapSize;
+        }
+
+        double itemWidth = (constraints.maxWidth -
+                ((widget.crossAxisCount - 1) * widget.crossAxisSpacing)) /
+            widget.crossAxisCount;
         return SingleChildScrollView(
-          controller: controller,
-          physics: SnapScrollSize(
-            snapSize: snapSize,
-          ),
+          controller: widget.controller,
+          physics: scrollPhysics,
           scrollDirection: Axis.horizontal,
           child: Row(
             children: List.generate(
-              itemCount * 2 - 1,
+              _computeActualChildCount(widget.itemCount),
               (index) {
                 if (index.isEven) {
                   return SizedBox(
                     width: itemWidth,
-                    child: itemBuilder.call(context, index ~/ 2),
+                    child: widget.itemBuilder.call(context, index ~/ 2),
                   );
                 } else {
-                  return SizedBox(width: crossAxisSpacing);
+                  return SizedBox(width: widget.crossAxisSpacing);
                 }
               },
             ),
@@ -66,8 +96,6 @@ class HorizontalListView extends StatelessWidget {
     );
   }
 }
-
-class PageChangeNotifier extends ChangeNotifier {}
 
 /// Custom scroll controller for controlling the horizontal list view's behavior.
 class HorizontalListViewController extends ScrollController {
@@ -84,7 +112,7 @@ class HorizontalListViewController extends ScrollController {
       page = 0;
       offset = position.minScrollExtent;
     }
-    if (page > pageLenght) {
+    if (page >= pageLenght) {
       page = pageLenght;
       offset = position.maxScrollExtent;
     }
@@ -93,10 +121,14 @@ class HorizontalListViewController extends ScrollController {
   }
 
   /// Gets the current visible page.
-  int get currentPage => (position.pixels / _snapSize).abs().toInt();
+  int get currentPage {
+    String roundedPage = (position.pixels / _snapSize).toStringAsFixed(1);
+    int parsedNumber = double.parse(roundedPage).ceil();
+    return parsedNumber;
+  }
 
   /// Gets the total number of pages in the list.
-  int get pageLenght => position.maxScrollExtent ~/ _snapSize;
+  int get pageLenght => (position.maxScrollExtent / _snapSize).ceil();
 
   double _snapSize = 0;
 
