@@ -15,7 +15,7 @@ and the Flutter guide for
 
 # horizontal_list_view [![Pub](https://img.shields.io/pub/v/horizontal_list_view.svg)](https://pub.dartlang.org/packages/horizontal_list_view)
 
-Flutter horizontal list view with fixed crossAxisCount.
+Simple and customizable horizontal list view widget for displaying a list of items in a horizontal layout. This package is designed to simplify the creation of horizontal lists with a specified crossAxisCount without the need to provide a fixed height for the ListView.
 
 ![Preview example](example/screenshots/example.webp)
 
@@ -25,7 +25,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  horizontal_list_view: ^1.0.2
+  horizontal_list_view: ^1.0.4
 ```
 
 import
@@ -45,7 +45,7 @@ HorizontalListView(
     crossAxisCount: 3, // Number of items displayed per row.
     crossAxisSpacing: 16, // Spacing between items in the same row.
     controller: HorizontalListViewController(), // Optional scroll controller.
-    itemCount: 10, // Total number of items in the list.
+    itemCount: 12, // Total number of items in the list.
     itemBuilder: (BuildContext context, int index) {
         // Create and return the widgets for each item.
         return AspectRatio(
