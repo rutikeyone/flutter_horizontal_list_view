@@ -39,21 +39,15 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(height: 32.0),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: 0,
-                itemBuilder: (context, index) => SizedBox(),
-              ),
-              HorizontalListView(
+              HorizontalListView.builder(
                 crossAxisCount: 3,
-                crossAxisSpacing: 12,
+                crossAxisSpacing: 16,
                 controller: _controller,
-                itemCount: 2,
+                itemCount: 25,
                 itemBuilder: (BuildContext context, int index) {
                   return AspectRatio(
                     aspectRatio: 2 / 3,
