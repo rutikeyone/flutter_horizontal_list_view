@@ -31,6 +31,7 @@ class HorizontalListView extends StatefulWidget {
   /// ```
   HorizontalListView({
     required this.crossAxisCount,
+    this.scrollPhysics,
     this.itemWidth,
     required this.crossAxisSpacing,
     this.controller,
@@ -66,6 +67,7 @@ class HorizontalListView extends StatefulWidget {
   const HorizontalListView.builder({
     required this.crossAxisCount,
     this.itemWidth,
+    this.scrollPhysics,
     this.crossAxisSpacing = 0,
     this.controller,
     this.alignment = CrossAxisAlignment.center,
@@ -93,6 +95,8 @@ class HorizontalListView extends StatefulWidget {
   final List<Widget>? children;
 
   final double? itemWidth;
+
+  final ScrollPhysics? scrollPhysics;
 
   /// [itemBuilder] is a callback function to build each item widget.
   final Widget Function(BuildContext context, int index)? itemBuilder;
@@ -145,7 +149,7 @@ class _HorizontalListViewState extends State<HorizontalListView> {
 
         return SingleChildScrollView(
           controller: widget.controller,
-          physics: scrollPhysics,
+          physics: widget.scrollPhysics ?? scrollPhysics,
           scrollDirection: Axis.horizontal,
           child: Row(
             crossAxisAlignment: widget.alignment ?? CrossAxisAlignment.end,

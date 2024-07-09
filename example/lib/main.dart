@@ -43,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               HorizontalListView.builder(
+                scrollPhysics: const ClampingScrollPhysics(),
                 itemWidth: 400,
                 crossAxisCount: 3,
                 crossAxisSpacing: 16,
