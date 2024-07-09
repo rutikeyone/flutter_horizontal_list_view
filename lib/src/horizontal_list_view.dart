@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:horizontal_list_view/src/snap_scroll_physic.dart';
 
@@ -30,6 +31,7 @@ class HorizontalListView extends StatefulWidget {
   /// ```
   HorizontalListView({
     required this.crossAxisCount,
+    this.itemWidth,
     required this.crossAxisSpacing,
     this.controller,
     this.alignment = CrossAxisAlignment.center,
@@ -63,6 +65,7 @@ class HorizontalListView extends StatefulWidget {
   /// ```
   const HorizontalListView.builder({
     required this.crossAxisCount,
+    this.itemWidth,
     this.crossAxisSpacing = 0,
     this.controller,
     this.alignment = CrossAxisAlignment.center,
@@ -88,6 +91,8 @@ class HorizontalListView extends StatefulWidget {
 
   /// [children] is a list of child widgets.
   final List<Widget>? children;
+
+  final double? itemWidth;
 
   /// [itemBuilder] is a callback function to build each item widget.
   final Widget Function(BuildContext context, int index)? itemBuilder;
@@ -134,9 +139,9 @@ class _HorizontalListViewState extends State<HorizontalListView> {
           widget.controller!.snapSize = snapSize;
         }
 
-        double itemWidth = (constraints.maxWidth -
-                ((widget.crossAxisCount - 1) * widget.crossAxisSpacing)) /
-            widget.crossAxisCount;
+        double itemWidth = widget.itemWidth ??
+            (constraints.maxWidth - ((widget.crossAxisCount - 1) * widget.crossAxisSpacing)) /
+                widget.crossAxisCount;
 
         return SingleChildScrollView(
           controller: widget.controller,
@@ -187,8 +192,7 @@ class HorizontalListViewController extends ScrollController {
   /// Animates the scroll view to a specific page with [duration] and [curve].
   ///
   /// [page] is the target page number.
-  Future<void> animateToPage(int page,
-      {required Duration duration, required Curve curve}) {
+  Future<void> animateToPage(int page, {required Duration duration, required Curve curve}) {
     double offset = _snapSize * page;
 
     if (page <= 0) {

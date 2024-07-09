@@ -31,8 +31,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final HorizontalListViewController _controller =
-      HorizontalListViewController();
+  final HorizontalListViewController _controller = HorizontalListViewController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               HorizontalListView.builder(
+                itemWidth: 400,
                 crossAxisCount: 3,
                 crossAxisSpacing: 16,
                 controller: _controller,
